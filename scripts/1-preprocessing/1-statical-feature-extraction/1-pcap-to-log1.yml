@@ -1,0 +1,22 @@
+---
+services:
+  zeek:
+    container_name: zeek
+    hostname: zeek
+    image: docker.arvancloud.ir/zeek/zeek:6.0.4
+    user: root
+    volumes:
+      - ./pcap:/pcap:ro
+      - ./log:/log
+    command: >
+          sh -c "zeek -r /pcap/*.pcap"
+    networks:
+      - zeek-net
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 10G
+
+networks:
+  zeek-net:
